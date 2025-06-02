@@ -10,7 +10,8 @@ import {
   eventStartsOnDate,
   eventEndsOnDate,
   getCategoryColor,
-  formatDateKey
+  formatDateKey,
+  getEndOfWeek
 } from "../utils/calendarUtils";
 import BadgeIndicator from "./BadgeIndicator";
 
@@ -23,6 +24,7 @@ interface DateCellProps {
   isFirstRow: boolean;
   isLastRow: boolean;
   onEventClick: (event: Event) => void;
+  multiDayEventGrid: any;
 }
 
 const DateCell: React.FC<DateCellProps> = ({
@@ -33,7 +35,8 @@ const DateCell: React.FC<DateCellProps> = ({
   isLastColumn,
   isFirstRow,
   isLastRow,
-  onEventClick
+  onEventClick,
+  multiDayEventGrid // <-- Add this prop
 }) => {
   const [activeEvent, setActiveEvent] = useState<Event | null>(null);
 
@@ -53,14 +56,11 @@ const DateCell: React.FC<DateCellProps> = ({
     return badge.date.toDateString() === cell.date.toDateString();
   });
 
-  // Find single-day events
+  // Get the event rows for this date from the grid
+  const eventRows = multiDayEventGrid[cell.date.toDateString()] || [];
+
   const singleDayEvents = cellEvents.filter(
     (event) => event.startDate.toDateString() === event.endDate.toDateString()
-  );
-
-  // Find multi-day events
-  const multiDayEvents = cellEvents.filter(
-    (event) => event.startDate.toDateString() !== event.endDate.toDateString()
   );
 
   // Handle event click
@@ -111,42 +111,87 @@ const DateCell: React.FC<DateCellProps> = ({
       )}
 
       {/* Multi-day events */}
-      <div className="mt-1 space-y-1 hidden md:block">
-        {multiDayEvents.map((event) => {
-          const isStart = eventStartsOnDate(event, cell.date);
-          const isEnd = eventEndsOnDate(event, cell.date);
+      <div
+        className="mt-1 relative hidden md:block"
+        style={{ minHeight: `${eventRows.length * 24}px` }}
+      >
+        {eventRows.map((event: Event, rowIndex: number) => {
+          if (!event) {
+            return (
+              <div
+                key={`empty-${rowIndex}`}
+                style={{
+                  height: "20px",
+                  top: `${rowIndex * 24}px`,
+                  position: "absolute",
+                  left: 0,
+                  right: 0
+                }}
+              />
+            );
+          }
+
+          const eventStart = new Date(event.startDate);
+          const eventEnd = new Date(event.endDate);
+
+          const segments = [];
+          let segmentStart = eventStart;
+          while (segmentStart <= eventEnd) {
+            const segmentEnd = new Date(
+              Math.min(getEndOfWeek(segmentStart).getTime(), eventEnd.getTime())
+            );
+            segments.push({ start: segmentStart, end: segmentEnd });
+            segmentStart = new Date(segmentEnd.getTime() + 24 * 60 * 60 * 1000); // Next day
+          }
+
           const categoryColor = getCategoryColor(event.category);
 
-          return (
-            <div
-              key={`${event.id}-${formatDateKey(cell.date)}`}
-              className={`
-            rounded-md py-1 px-2 text-xs font-medium truncate cursor-pointer relative
+          return segments.map((segment, index) => {
+            const isStart =
+              segment.start.toDateString() === cell.date.toDateString();
+            const segmentDays =
+              Math.floor(
+                (segment.end.getTime() - segment.start.getTime()) /
+                  (1000 * 60 * 60 * 24)
+              ) + 1;
+
+            const segmentWidth = `${segmentDays * 100}%`;
+
+            if (isStart) {
+              return (
+                <div
+                  key={`${event.id}-${formatDateKey(segment.start)}-${index}`}
+                  className={`
+            py-1 px-2 text-xs font-medium truncate cursor-pointer absolute
             backdrop-blur-sm bg-white/40 border border-white/30 shadow
             flex items-center justify-center
-            ${isStart ? "rounded-l-md ml-0" : "-ml-1"}
-            ${isEnd ? "rounded-r-md mr-0" : "-mr-1"}
           `}
-              style={{
-                backgroundColor: categoryColor.backgroundColor
-                  ? categoryColor.backgroundColor + "80"
-                  : "rgba(255,255,255,0.4)",
-                color: categoryColor.color,
-                height: "20px"
-              }}
-              onClick={(e) => handleEventClick(event, e)}
-            >
-              {isStart && (
-                <span className="truncate text-[10px] w-full text-center">
-                  {event.title}
-                </span>
-              )}
+                  style={{
+                    backgroundColor: categoryColor.backgroundColor
+                      ? categoryColor.backgroundColor + "80"
+                      : "rgba(255,255,255,0.4)",
+                    color: categoryColor.color,
+                    height: "20px",
+                    top: `${rowIndex * 24}px`,
+                    left: 0,
+                    width: segmentWidth,
+                    zIndex: 1
+                  }}
+                  onClick={(e) => handleEventClick(event, e)}
+                >
+                  <span className="truncate text-[10px] w-full text-center">
+                    {event.title}
+                  </span>
 
-              {activeEvent && activeEvent.id === event.id && (
-                <EventTooltip event={event} onClose={closeTooltip} />
-              )}
-            </div>
-          );
+                  {activeEvent && activeEvent.id === event.id && (
+                    <EventTooltip event={event} onClose={closeTooltip} />
+                  )}
+                </div>
+              );
+            }
+
+            return null;
+          });
         })}
       </div>
 

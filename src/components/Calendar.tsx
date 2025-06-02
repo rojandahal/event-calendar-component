@@ -5,6 +5,55 @@ import DateCell from "./DateCell";
 import { Badge, Event, Holiday } from "../types";
 import { generateCalendarDays } from "../utils/calendarUtils";
 
+function getMultiDayEventGrid(events: Event[], dateRange: Date[]) {
+  const multiDayEvents = events.filter(
+    (e) => e.startDate.toDateString() !== e.endDate.toDateString()
+  );
+  const grid: Record<string, (Event | null)[]> = {};
+  const eventRows: Record<string, number> = {};
+
+  multiDayEvents.forEach((event) => {
+    const eventDates: string[] = [];
+    for (
+      let d = new Date(event.startDate);
+      d <= event.endDate;
+      d.setDate(d.getDate() + 1)
+    ) {
+      eventDates.push(d.toDateString());
+    }
+    let row = 0;
+    let found = false;
+    while (!found) {
+      if (
+        eventDates.every((dateKey) => !grid[dateKey] || !grid[dateKey][row])
+      ) {
+        eventDates.forEach((dateKey) => {
+          if (!grid[dateKey]) grid[dateKey] = [];
+          grid[dateKey][row] = event;
+        });
+        eventRows[event.id] = row;
+        found = true;
+      } else {
+        row++;
+      }
+    }
+  });
+
+  // Fill empty slots with null for each date
+  dateRange.forEach((date) => {
+    const key = date.toDateString();
+    if (!grid[key]) grid[key] = [];
+    const maxRows = Math.max(
+      ...Object.values(grid).map((arr) => arr.length),
+      0
+    );
+    for (let i = 0; i < maxRows; i++) {
+      if (!grid[key][i]) grid[key][i] = null;
+    }
+  });
+
+  return grid;
+}
 interface CalendarProps {
   events: Event[];
   badges: Badge[];
@@ -46,6 +95,11 @@ const Calendar: React.FC<CalendarProps> = ({
     setSelectedEvent(event);
   };
 
+  const multiDayEventGrid = getMultiDayEventGrid(
+    events,
+    calendarDays.map((cell) => cell.date)
+  );
+
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
       <div className="p-4">
@@ -74,6 +128,7 @@ const Calendar: React.FC<CalendarProps> = ({
                   isFirstRow={rowIndex === 0}
                   isLastRow={rowIndex === 5}
                   onEventClick={handleEventClick}
+                  multiDayEventGrid={multiDayEventGrid} // <-- Pass the grid to DateCell
                 />
               );
             })}

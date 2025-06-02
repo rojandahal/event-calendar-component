@@ -226,3 +226,16 @@ export const formatTime = (date: Date): string => {
     minute: "2-digit"
   });
 };
+
+export const getEndOfWeek = (date: Date) => {
+  const day = date.getDay();
+  const diff = 6 - day; // Days until the end of the week (Saturday)
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() + diff);
+};
+
+// Helper function to get the start of the week
+export const getStartOfWeek = (date: Date) => {
+  const day = date.getDay();
+  const diff = -day; // Days since the start of the week (Sunday)
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() + diff);
+};

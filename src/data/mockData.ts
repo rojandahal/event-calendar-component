@@ -15,7 +15,7 @@ export const events: Event[] = [
     id: "2",
     title: "Event Two",
     startDate: new Date(2025, 5, 2),
-    endDate: new Date(2025, 5, 7),
+    endDate: new Date(2025, 5, 5),
     category: "project",
     location: "Virtual Meeting",
     description: "Project planning session with team members."
@@ -39,25 +39,25 @@ export const events: Event[] = [
     description: "Project planning session with team members."
   },
   {
-    id: "3",
+    id: "5",
     title: "Team Meeting",
-    startDate: new Date(2025, 5, 15),
+    startDate: new Date(2025, 5, 5),
     endDate: new Date(2025, 5, 15),
-    category: "work",
+    category: "appointment",
     location: "Conference Room B",
     description: "Weekly team sync-up."
   },
   {
-    id: "4",
+    id: "6",
     title: "Doctor Appointment",
-    startDate: new Date(2025, 5, 18),
-    endDate: new Date(2025, 5, 18),
-    category: "appointment",
+    startDate: new Date(2025, 5, 10),
+    endDate: new Date(2025, 5, 12),
+    category: "work",
     location: "Medical Center",
     description: "Annual checkup."
   },
   {
-    id: "5",
+    id: "7",
     title: "Birthday Party",
     startDate: new Date(2025, 5, 25),
     endDate: new Date(2025, 5, 25),
