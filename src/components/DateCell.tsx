@@ -121,21 +121,26 @@ const DateCell: React.FC<DateCellProps> = ({
             <div
               key={`${event.id}-${formatDateKey(cell.date)}`}
               className={`
-          rounded-md py-1 px-2 text-xs font-medium truncate cursor-pointer relative
-          backdrop-blur-sm bg-white/40 border border-white/30 shadow
-          ${isStart ? "rounded-l-md ml-0" : "-ml-1"}
-          ${isEnd ? "rounded-r-md mr-0" : "-mr-1"}
-        `}
+            rounded-md py-1 px-2 text-xs font-medium truncate cursor-pointer relative
+            backdrop-blur-sm bg-white/40 border border-white/30 shadow
+            flex items-center justify-center
+            ${isStart ? "rounded-l-md ml-0" : "-ml-1"}
+            ${isEnd ? "rounded-r-md mr-0" : "-mr-1"}
+          `}
               style={{
                 backgroundColor: categoryColor.backgroundColor
                   ? categoryColor.backgroundColor + "80"
                   : "rgba(255,255,255,0.4)",
                 color: categoryColor.color,
-                minHeight: "20px"
+                height: "20px"
               }}
               onClick={(e) => handleEventClick(event, e)}
             >
-              {isStart && <span className="truncate">{event.title}</span>}
+              {isStart && (
+                <span className="truncate text-[10px] w-full text-center">
+                  {event.title}
+                </span>
+              )}
 
               {activeEvent && activeEvent.id === event.id && (
                 <EventTooltip event={event} onClose={closeTooltip} />
