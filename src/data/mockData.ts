@@ -1,4 +1,4 @@
-import { Badge, Event, Holiday } from "../types";
+import { Badge, Event, Holiday, TopBadge } from "../types";
 
 // Sample events data
 export const events: Event[] = [
@@ -6,65 +6,65 @@ export const events: Event[] = [
     id: "1",
     title: "Event One",
     startDate: new Date(2025, 5, 2),
-    endDate: new Date(2025, 5, 7),
-    category: "work",
+    endDate: new Date(2025, 5, 13),
+    category: "event",
     location: "Conference Room A",
     description: "This is a multi-day event spanning across dates."
   },
-  {
-    id: "2",
-    title: "Event Two",
-    startDate: new Date(2025, 5, 2),
-    endDate: new Date(2025, 5, 5),
-    category: "project",
-    location: "Virtual Meeting",
-    description: "Project planning session with team members."
-  },
-  {
-    id: "3",
-    title: "Leave",
-    startDate: new Date(2025, 5, 2),
-    endDate: new Date(2025, 5, 7),
-    category: "leave",
-    location: "any",
-    description: "Project planning session with team members."
-  },
-  {
-    id: "4",
-    title: "Event Four",
-    startDate: new Date(2025, 5, 2),
-    endDate: new Date(2025, 5, 7),
-    category: "project",
-    location: "Virtual Meeting",
-    description: "Project planning session with team members."
-  },
-  {
-    id: "5",
-    title: "Team Meeting",
-    startDate: new Date(2025, 5, 5),
-    endDate: new Date(2025, 5, 15),
-    category: "appointment",
-    location: "Conference Room B",
-    description: "Weekly team sync-up."
-  },
-  {
-    id: "6",
-    title: "Doctor Appointment",
-    startDate: new Date(2025, 5, 10),
-    endDate: new Date(2025, 5, 12),
-    category: "work",
-    location: "Medical Center",
-    description: "Annual checkup."
-  },
-  {
-    id: "7",
-    title: "Birthday Party",
-    startDate: new Date(2025, 5, 25),
-    endDate: new Date(2025, 5, 25),
-    category: "personal",
-    location: "Home",
-    description: "Celebrating with friends and family."
-  }
+  // {
+  //   id: "2",
+  //   title: "Event Two",
+  //   startDate: new Date(2025, 5, 2),
+  //   endDate: new Date(2025, 5, 5),
+  //   category: "project",
+  //   location: "Virtual Meeting",
+  //   description: "Project planning session with team members."
+  // },
+  // {
+  //   id: "3",
+  //   title: "Leave",
+  //   startDate: new Date(2025, 5, 2),
+  //   endDate: new Date(2025, 5, 7),
+  //   category: "leave",
+  //   location: "any",
+  //   description: "Project planning session with team members."
+  // },
+  // {
+  //   id: "4",
+  //   title: "Event Four",
+  //   startDate: new Date(2025, 5, 2),
+  //   endDate: new Date(2025, 5, 7),
+  //   category: "project",
+  //   location: "Virtual Meeting",
+  //   description: "Project planning session with team members."
+  // },
+  // {
+  //   id: "5",
+  //   title: "Team Meeting",
+  //   startDate: new Date(2025, 5, 5),
+  //   endDate: new Date(2025, 5, 15),
+  //   category: "appointment",
+  //   location: "Conference Room B",
+  //   description: "Weekly team sync-up."
+  // },
+  // {
+  //   id: "6",
+  //   title: "Doctor Appointment",
+  //   startDate: new Date(2025, 5, 10),
+  //   endDate: new Date(2025, 5, 12),
+  //   category: "work",
+  //   location: "Medical Center",
+  //   description: "Annual checkup."
+  // },
+  // {
+  //   id: "7",
+  //   title: "Birthday Party",
+  //   startDate: new Date(2025, 5, 25),
+  //   endDate: new Date(2025, 5, 25),
+  //   category: "personal",
+  //   location: "Home",
+  //   description: "Celebrating with friends and family."
+  // }
 ];
 
 // Sample holidays data
@@ -101,14 +101,14 @@ export const badges: Badge[] = [
   },
   {
     id: 1,
-    category: "leave",
-    date: new Date(2025, 5, 11),
+    category: "wfh",
+    date: new Date(2025, 5, 2),
     count: 6
   },
   {
     id: 1,
-    category: "leave",
-    date: new Date(2025, 5, 12),
+    category: "late",
+    date: new Date(2025, 5, 2),
     count: 2
   },
   {
@@ -116,5 +116,20 @@ export const badges: Badge[] = [
     category: "leave",
     date: new Date(2025, 5, 13),
     count: 2
+  }
+];
+
+export const topBadge: TopBadge[] = [
+  {
+    id: 1,
+    category: "project-count",
+    date: new Date(2025, 5, 2),
+    count: 12
+  },
+  {
+    id: 2,
+    category: "notes-count",
+    date: new Date(2025, 5, 2),
+    count: 3
   }
 ];

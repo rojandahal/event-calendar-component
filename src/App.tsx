@@ -1,5 +1,5 @@
 import Calendar from "./components/Calendar";
-import { badges, events, holidays } from "./data/mockData";
+import { badges, events, holidays, topBadge } from "./data/mockData";
 import { CalendarDays } from "lucide-react";
 
 function App() {
@@ -19,7 +19,12 @@ function App() {
         </header>
 
         <main>
-          <Calendar events={events} badges={badges} holidays={holidays} />
+          <Calendar
+            events={events}
+            badges={badges}
+            holidays={holidays}
+            topBadges={topBadge}
+          />
         </main>
 
         <footer className="mt-8 text-center text-gray-500 text-sm">

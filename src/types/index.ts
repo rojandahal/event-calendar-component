@@ -8,6 +8,7 @@ export type EventCategory =
   | "event";
 
 export type BadgeCategory = "appointment" | "leave" | "late" | "wfh";
+export type TopBadgeCategory = "project-count" | "notes-count";
 
 export interface Event {
   id: string;
@@ -27,7 +28,7 @@ export interface Holiday {
 }
 
 export interface CategoryColor {
-  category: EventCategory;
+  category: EventCategory | BadgeCategory | TopBadgeCategory;
   color: string;
   backgroundColor: string;
   label: string;
@@ -39,11 +40,19 @@ export interface DateCell {
   isToday: boolean;
   isHoliday: boolean;
   holidayName?: string;
+  isWeekend: boolean;
 }
 
 export interface Badge {
   id: number;
   category: BadgeCategory;
+  date: Date;
+  count: number;
+}
+
+export interface TopBadge {
+  id: number;
+  category: TopBadgeCategory;
   date: Date;
   count: number;
 }

@@ -3,7 +3,9 @@ import {
   Event,
   DateCell as DateCellType,
   Badge,
-  BadgeCategory
+  BadgeCategory,
+  TopBadge,
+  TopBadgeCategory
 } from "../types";
 import EventTooltip from "./EventTooltip";
 import {
@@ -12,11 +14,13 @@ import {
   getEndOfWeek
 } from "../utils/calendarUtils";
 import BadgeIndicator from "./BadgeIndicator";
+import TopBadgeIndicator from "./TopBadgeIndicator";
 
 interface DateCellProps {
   cell: DateCellType;
   events: Event[];
   badges: Badge[];
+  topBadges: TopBadge[];
   isFirstColumn: boolean;
   isLastColumn: boolean;
   isFirstRow: boolean;
@@ -29,6 +33,7 @@ const DateCell: React.FC<DateCellProps> = ({
   cell,
   events,
   badges,
+  topBadges,
   isFirstColumn,
   isLastColumn,
   isFirstRow,
@@ -51,6 +56,10 @@ const DateCell: React.FC<DateCellProps> = ({
   });
 
   const cellBadge = badges.filter((badge) => {
+    return badge.date.toDateString() === cell.date.toDateString();
+  });
+
+  const cellTopBadge = topBadges.filter((badge) => {
     return badge.date.toDateString() === cell.date.toDateString();
   });
 
@@ -78,10 +87,17 @@ const DateCell: React.FC<DateCellProps> = ({
       className={`
       min-h-[100px] border border-gray-200 p-1 relative
       ${cell.isCurrentMonth ? "bg-white" : "bg-gray-50 text-gray-400"}
-      ${cell.isToday ? "bg-blue-50" : ""}
+      ${cell.isToday ? "bg-[#FFDEB0]" : ""}
       ${cell.isHoliday ? "bg-green-50" : ""}
       `}
-      style={{ minHeight: "100px" }}
+      style={{
+        minHeight: "100px",
+        backgroundColor: cell.isToday
+          ? "#FFDEB0"
+          : cell.isWeekend
+          ? "#E6F6EF"
+          : ""
+      }}
     >
       <div className="flex justify-between">
         <div
@@ -220,7 +236,7 @@ const DateCell: React.FC<DateCellProps> = ({
 
       {/* Event indicators */}
       {cellBadge.length > 0 && (
-        <div className="absolute bottom-1 left-1 flex space-x-1">
+        <div className="absolute bottom-1 left-1 right-1 flex justify-center space-x-1">
           {Array.from(
             cellBadge
               .reduce((acc, badge) => {
@@ -235,6 +251,31 @@ const DateCell: React.FC<DateCellProps> = ({
               .values()
           ).map((item, index) => (
             <BadgeIndicator
+              id={index}
+              category={item.category}
+              count={item.count}
+            />
+          ))}
+        </div>
+      )}
+
+      {/*  Top Badge Indicator */}
+      {cellTopBadge.length > 0 && (
+        <div className="absolute top-1 right-1 flex space-x-1">
+          {Array.from(
+            cellTopBadge
+              .reduce((acc, badge) => {
+                const key = badge.category;
+                if (!acc.has(key)) {
+                  acc.set(key, { category: key, count: badge.count });
+                } else {
+                  acc.get(key)!.count += badge.count;
+                }
+                return acc;
+              }, new Map<string, { category: TopBadgeCategory; count: number }>())
+              .values()
+          ).map((item, index) => (
+            <TopBadgeIndicator
               id={index}
               category={item.category}
               count={item.count}

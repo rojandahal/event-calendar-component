@@ -4,7 +4,8 @@ import {
   DateCell,
   CategoryColor,
   EventCategory,
-  BadgeCategory
+  BadgeCategory,
+  TopBadgeCategory
 } from "../types";
 
 // Get days in month
@@ -104,7 +105,8 @@ export const generateCalendarDays = (
       isCurrentMonth: false,
       isToday: isSameDay(date, today),
       isHoliday: !!holiday,
-      holidayName: holiday?.name
+      holidayName: holiday?.name,
+      isWeekend: date.getDay() === 0 || date.getDay() === 6
     });
   }
 
@@ -118,7 +120,8 @@ export const generateCalendarDays = (
       isCurrentMonth: true,
       isToday: isSameDay(date, today),
       isHoliday: !!holiday,
-      holidayName: holiday?.name
+      holidayName: holiday?.name,
+      isWeekend: date.getDay() === 0 || date.getDay() === 6
     });
   }
 
@@ -133,7 +136,8 @@ export const generateCalendarDays = (
       isCurrentMonth: false,
       isToday: isSameDay(date, today),
       isHoliday: !!holiday,
-      holidayName: holiday?.name
+      holidayName: holiday?.name,
+      isWeekend: date.getDay() === 0 || date.getDay() === 6
     });
   }
 
@@ -176,8 +180,8 @@ export const getCategoryColors = (): CategoryColor[] => {
     },
     {
       category: "appointment",
-      color: "#8B5CF6",
-      backgroundColor: "#EDE9FE",
+      color: "#9313D8",
+      backgroundColor: "#9313D8",
       label: "Appointment"
     },
     {
@@ -194,16 +198,46 @@ export const getCategoryColors = (): CategoryColor[] => {
     },
     {
       category: "leave",
-      color: "#EF4444",
-      backgroundColor: "#FEE2E2",
+      color: "#00A85F",
+      backgroundColor: "#00A85F",
       label: "Leave"
+    },
+    {
+      category: "event",
+      color: "black",
+      backgroundColor: "#B0E1FF",
+      label: "Event"
+    },
+    {
+      category: "late",
+      color: "#E14A09",
+      backgroundColor: "#E14A09",
+      label: "Leave"
+    },
+    {
+      category: "wfh",
+      color: "#FF9500",
+      backgroundColor: "#FF9500",
+      label: "Leave"
+    },
+    {
+      category: "project-count",
+      color: "#009DFF",
+      backgroundColor: "#FEE2E2",
+      label: "Projects"
+    },
+    {
+      category: "notes-count",
+      color: "#0076BF",
+      backgroundColor: "#0076BF",
+      label: "Notes"
     }
   ];
 };
 
 // Get the color for a category
 export const getCategoryColor = (
-  category: EventCategory | BadgeCategory
+  category: EventCategory | BadgeCategory | TopBadgeCategory
 ): CategoryColor => {
   const colors = getCategoryColors();
   return colors.find((c) => c.category === category) || colors[0];
