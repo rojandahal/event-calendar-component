@@ -7,8 +7,6 @@ import {
 } from "../types";
 import EventTooltip from "./EventTooltip";
 import {
-  eventStartsOnDate,
-  eventEndsOnDate,
   getCategoryColor,
   formatDateKey,
   getEndOfWeek
@@ -36,7 +34,7 @@ const DateCell: React.FC<DateCellProps> = ({
   isFirstRow,
   isLastRow,
   onEventClick,
-  multiDayEventGrid // <-- Add this prop
+  multiDayEventGrid
 }) => {
   const [activeEvent, setActiveEvent] = useState<Event | null>(null);
 
