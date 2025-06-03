@@ -25,7 +25,7 @@ interface DateCellProps {
   isLastColumn: boolean;
   isFirstRow: boolean;
   isLastRow: boolean;
-  onEventClick: (event: Event) => void;
+  onEventClick: (event: Event, e: React.MouseEvent) => void;
   multiDayEventGrid: any;
 }
 
@@ -42,6 +42,10 @@ const DateCell: React.FC<DateCellProps> = ({
   multiDayEventGrid
 }) => {
   const [activeEvent, setActiveEvent] = useState<Event | null>(null);
+  const [tooltipPosition, setTooltipPosition] = useState<{
+    top: number;
+    left: number;
+  } | null>(null);
 
   // Filter events for this date
   const cellEvents = events.filter((event) => {
@@ -74,18 +78,22 @@ const DateCell: React.FC<DateCellProps> = ({
   const handleEventClick = (event: Event, e: React.MouseEvent) => {
     e.stopPropagation();
     setActiveEvent(event);
-    onEventClick(event);
+    // setTooltipPosition({
+    //   top: e.clientX,
+    //   left: e.clientY
+    // });
+    onEventClick(event, e);
   };
 
-  // Close tooltip
   const closeTooltip = () => {
     setActiveEvent(null);
+    setTooltipPosition(null);
   };
 
   return (
     <div
       className={`
-      h-[140px] border border-gray-200 relative
+      h-[140px] border border-gray-200 relative cursor-pointer
       ${cell.isCurrentMonth ? "bg-white" : "bg-gray-50 text-gray-400"}
       ${cell.isToday ? "bg-[#FFDEB0]" : ""}
       ${cell.isHoliday ? "bg-green-50" : ""}
@@ -197,10 +205,6 @@ const DateCell: React.FC<DateCellProps> = ({
                   <span className="truncate text-[10px] w-full text-center">
                     {event.title}
                   </span>
-
-                  {activeEvent && activeEvent.id == event.id && (
-                    <EventTooltip event={event} onClose={closeTooltip} />
-                  )}
                 </div>
               );
             }
@@ -226,14 +230,26 @@ const DateCell: React.FC<DateCellProps> = ({
               onClick={(e) => handleEventClick(event, e)}
             >
               {event.title}
-
-              <EventTooltip event={event} onClose={closeTooltip} />
-              {/* {activeEvent && activeEvent.id == event.id && (
-                )} */}
             </div>
           );
         })}
       </div>
+
+      {/* DISABLED FOR NOW */}
+      {/* Tooltip */}
+      {/* {activeEvent && tooltipPosition && (
+        <div
+          style={{
+            position: "absolute",
+            top: tooltipPosition.top,
+            left: tooltipPosition.left,
+            transform: "translateX(-100%)",
+            zIndex: 1000
+          }}
+        >
+          <EventTooltip event={activeEvent} onClose={closeTooltip} />
+        </div>
+      )} */}
 
       {/* Event indicators */}
       {cellBadge.length > 0 && (

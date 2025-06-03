@@ -11,7 +11,6 @@ interface CalendarProps {
   badges: Badge[];
   topBadges: TopBadge[];
   holidays: Holiday[];
-  isWeekend: boolean;
   weekendDays: number[];
   initialDate?: Date;
 }
@@ -21,7 +20,6 @@ const Calendar: React.FC<CalendarProps> = ({
   badges,
   topBadges,
   holidays,
-  isWeekend,
   weekendDays,
   initialDate = new Date()
 }) => {
@@ -37,7 +35,6 @@ const Calendar: React.FC<CalendarProps> = ({
     currentYear,
     currentMonth,
     holidays,
-    isWeekend,
     weekendDays
   );
 
@@ -51,7 +48,7 @@ const Calendar: React.FC<CalendarProps> = ({
   };
 
   // Handle event click
-  const handleEventClick = (event: Event) => {
+  const handleEventClick = (event: Event, e: React.MouseEvent) => {
     console.log("ON EVENT CLICK", event);
     setSelectedEvent(event);
   };

@@ -1,5 +1,5 @@
-import React from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import React from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface CalendarHeaderProps {
   currentDate: Date;
@@ -13,9 +13,10 @@ const CalendarHeader: React.FC<CalendarHeaderProps> = ({
   onNextMonth
 }) => {
   const formatMonth = (date: Date): string => {
-    return date.toLocaleDateString('en-US', {
-      month: 'long',
-      year: 'numeric'
+    return date.toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "long",
+      year: "numeric"
     });
   };
 

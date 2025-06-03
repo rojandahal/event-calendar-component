@@ -24,7 +24,6 @@ function App() {
             badges={badges}
             holidays={holidays}
             topBadges={topBadge}
-            isWeekend={true}
             weekendDays={[0, 6]} // Sun = 0 to Sat = 6
           />
         </main>

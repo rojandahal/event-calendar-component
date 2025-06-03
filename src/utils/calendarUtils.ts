@@ -74,7 +74,6 @@ export const generateCalendarDays = (
   year: number,
   month: number,
   holidays: Holiday[],
-  isWeekend: boolean,
   weekendDays: number[]
 ): DateCell[] => {
   const daysInMonth = getDaysInMonth(year, month);
@@ -108,7 +107,7 @@ export const generateCalendarDays = (
       isToday: isSameDay(date, today),
       isHoliday: !!holiday,
       holidayName: holiday?.name,
-      isWeekend: isWeekend ? weekendDays.includes(date.getDay()) : false
+      isWeekend: weekendDays.includes(date.getDay())
     });
   }
 
@@ -123,7 +122,7 @@ export const generateCalendarDays = (
       isToday: isSameDay(date, today),
       isHoliday: !!holiday,
       holidayName: holiday?.name,
-      isWeekend: isWeekend ? weekendDays.includes(date.getDay()) : false
+      isWeekend: weekendDays.includes(date.getDay())
     });
   }
 
@@ -139,7 +138,7 @@ export const generateCalendarDays = (
       isToday: isSameDay(date, today),
       isHoliday: !!holiday,
       holidayName: holiday?.name,
-      isWeekend: isWeekend ? weekendDays.includes(date.getDay()) : false
+      isWeekend: weekendDays.includes(date.getDay())
     });
   }
 
