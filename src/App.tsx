@@ -25,6 +25,74 @@ function App() {
             holidays={holidays}
             topBadges={topBadge}
             weekendDays={[0, 6]} // Sun = 0 to Sat = 6
+            calendarColors={[
+              {
+                category: "work",
+                color: "#10B981",
+                backgroundColor: "#D1FAE5",
+                label: "Work"
+              },
+              {
+                category: "personal",
+                color: "#3B82F6",
+                backgroundColor: "#DBEAFE",
+                label: "Personal"
+              },
+              {
+                category: "appointment",
+                color: "#9313D8",
+                backgroundColor: "#9313D8",
+                label: "Appointment"
+              },
+              {
+                category: "project",
+                color: "#F59E0B",
+                backgroundColor: "#FEF3C7",
+                label: "Project"
+              },
+              {
+                category: "holiday",
+                color: "#EF4444",
+                backgroundColor: "#FEE2E2",
+                label: "Holiday"
+              },
+              {
+                category: "leave",
+                color: "#00A85F",
+                backgroundColor: "#00A85F",
+                label: "Leave"
+              },
+              {
+                category: "event",
+                color: "black",
+                backgroundColor: "#B0E1FF",
+                label: "Event"
+              },
+              {
+                category: "late",
+                color: "#E14A09",
+                backgroundColor: "#E14A09",
+                label: "Leave"
+              },
+              {
+                category: "wfh",
+                color: "#FF9500",
+                backgroundColor: "#FF9500",
+                label: "Leave"
+              },
+              {
+                category: "project-count",
+                color: "#009DFF",
+                backgroundColor: "#FEE2E2",
+                label: "Projects"
+              },
+              {
+                category: "notes-count",
+                color: "#0076BF",
+                backgroundColor: "#0076BF",
+                label: "Notes"
+              }
+            ]}
           />
         </main>
 

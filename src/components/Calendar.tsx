@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CalendarHeader from "./CalendarHeader";
 import WeekdayHeader from "./WeekdayHeader";
 import DateCell from "./DateCell";
-import { Badge, Event, Holiday, TopBadge } from "../types";
+import { Badge, CategoryColor, Event, Holiday, TopBadge } from "../types";
 import { generateCalendarDays } from "../utils/calendarUtils";
 import { getMultiDayEventGrid } from "../utils/eventUtils";
 
@@ -12,6 +12,7 @@ interface CalendarProps {
   topBadges: TopBadge[];
   holidays: Holiday[];
   weekendDays: number[];
+  calendarColors: CategoryColor[];
   initialDate?: Date;
 }
 
@@ -21,6 +22,7 @@ const Calendar: React.FC<CalendarProps> = ({
   topBadges,
   holidays,
   weekendDays,
+  calendarColors,
   initialDate = new Date()
 }) => {
   const [currentDate, setCurrentDate] = useState<Date>(initialDate);
@@ -88,6 +90,7 @@ const Calendar: React.FC<CalendarProps> = ({
                   onEventClick={handleEventClick}
                   multiDayEventGrid={multiDayEventGrid}
                   topBadges={topBadges}
+                  calendarColors={calendarColors}
                 />
               );
             })}

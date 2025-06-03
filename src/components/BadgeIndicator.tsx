@@ -1,19 +1,21 @@
 import React from "react";
-import { BadgeCategory } from "../types";
+import { BadgeCategory, CategoryColor } from "../types";
 import { getCategoryColor } from "../utils/calendarUtils";
 
 interface BadgeIndicatorProps {
   id: number;
   category: BadgeCategory;
   count: number;
+  calendarColors: CategoryColor[];
 }
 
 const BadgeIndicator: React.FC<BadgeIndicatorProps> = ({
   id,
   category,
-  count
+  count,
+  calendarColors
 }) => {
-  const categoryColor = getCategoryColor(category);
+  const categoryColor = getCategoryColor(category, calendarColors);
   return (
     <div
       key={id}

@@ -5,7 +5,8 @@ import {
   Badge,
   BadgeCategory,
   TopBadge,
-  TopBadgeCategory
+  TopBadgeCategory,
+  CategoryColor
 } from "../types";
 import EventTooltip from "./EventTooltip";
 import {
@@ -27,6 +28,7 @@ interface DateCellProps {
   isLastRow: boolean;
   onEventClick: (event: Event, e: React.MouseEvent) => void;
   multiDayEventGrid: any;
+  calendarColors: CategoryColor[];
 }
 
 const DateCell: React.FC<DateCellProps> = ({
@@ -39,7 +41,8 @@ const DateCell: React.FC<DateCellProps> = ({
   isFirstRow,
   isLastRow,
   onEventClick,
-  multiDayEventGrid
+  multiDayEventGrid,
+  calendarColors
 }) => {
   const [activeEvent, setActiveEvent] = useState<Event | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{
@@ -167,7 +170,10 @@ const DateCell: React.FC<DateCellProps> = ({
             segmentStart = new Date(segmentEnd.getTime() + 24 * 60 * 60 * 1000); // Next day
           }
 
-          const categoryColor = getCategoryColor(event.category);
+          const categoryColor = getCategoryColor(
+            event.category,
+            calendarColors
+          );
 
           return segments.map((segment, index) => {
             const isStart =
@@ -217,7 +223,10 @@ const DateCell: React.FC<DateCellProps> = ({
       {/* Single-day events */}
       <div className="mt-1 mb-10 space-y-1 hidden md:block">
         {singleDayEvents.map((event) => {
-          const categoryColor = getCategoryColor(event.category);
+          const categoryColor = getCategoryColor(
+            event.category,
+            calendarColors
+          );
 
           return (
             <div
@@ -271,6 +280,7 @@ const DateCell: React.FC<DateCellProps> = ({
               id={index}
               category={item.category}
               count={item.count}
+              calendarColors={calendarColors}
             />
           ))}
         </div>
@@ -296,6 +306,7 @@ const DateCell: React.FC<DateCellProps> = ({
               id={index}
               category={item.category}
               count={item.count}
+              calendarColors={calendarColors}
             />
           ))}
         </div>

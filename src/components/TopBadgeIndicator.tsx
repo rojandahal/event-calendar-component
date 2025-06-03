@@ -1,6 +1,6 @@
 import React from "react";
 import { getCategoryColor } from "../utils/calendarUtils";
-import { TopBadgeCategory } from "../types";
+import { CategoryColor, TopBadgeCategory } from "../types";
 import ProjectIcon from "../assets/svg/briefcase.svg";
 import NotesIcon from "../assets/svg/clipboard-signature.svg";
 
@@ -8,14 +8,16 @@ interface TopBadgeIndicator {
   id: number;
   category: TopBadgeCategory;
   count: number;
+  calendarColors: CategoryColor[];
 }
 
 const TopBadgeIndicator: React.FC<TopBadgeIndicator> = ({
   id,
   category,
-  count
+  count,
+  calendarColors
 }) => {
-  const categoryColor = getCategoryColor(category);
+  const categoryColor = getCategoryColor(category, calendarColors);
 
   const renderIcons = () => {
     switch (category) {

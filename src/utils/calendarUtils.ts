@@ -238,10 +238,19 @@ export const getCategoryColors = (): CategoryColor[] => {
 
 // Get the color for a category
 export const getCategoryColor = (
-  category: EventCategory | BadgeCategory | TopBadgeCategory
+  category: EventCategory | BadgeCategory | TopBadgeCategory,
+  calendarColors: CategoryColor[]
 ): CategoryColor => {
   const colors = getCategoryColors();
-  return colors.find((c) => c.category === category) || colors[0];
+  return (
+    calendarColors.find((c) => c.category === category) ||
+    colors.find((c) => c.category === category) || {
+      category: "event",
+      color: "#000000",
+      backgroundColor: "#FFFFFF",
+      label: "Default"
+    }
+  );
 };
 
 // Format date to display in UI
