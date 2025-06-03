@@ -143,7 +143,7 @@ const DateCell: React.FC<DateCellProps> = ({
       {/* Holiday name */}
       {cell.isHoliday && cell.holidayName && (
         <div className="mt-1 mb-10 space-y-1 hidden md:block">
-          <div className="text-[10px] text-center bg-holidaybar text-black mt-1 py-1 px-2 truncate cursor-pointer relative">
+          <div className="text-[11px] text-center bg-holidaybar text-black mt-1 py-1 px-2 truncate cursor-pointer relative">
             {cell.holidayName}
           </div>
         </div>
@@ -216,12 +216,13 @@ const DateCell: React.FC<DateCellProps> = ({
                     height: "20px",
                     top: `${rowIndex * 24}px`,
                     left: 0,
+                    padding: 1,
                     width: segmentWidth,
                     zIndex: 1
                   }}
                   onClick={(e) => handleEventClick(event, e)}
                 >
-                  <span className="truncate text-[10px] w-full text-center">
+                  <span className="truncate text-[11px] w-full text-center">
                     {event.title}
                   </span>
                 </div>
@@ -245,7 +246,7 @@ const DateCell: React.FC<DateCellProps> = ({
             return (
               <div
                 key={`${event.id}-${formatDateKey(cell.date)}`}
-                className="py-1 px-2 text-[10px] font-medium truncate cursor-pointer relative"
+                className="py-1 px-2 text-[11px] font-medium truncate cursor-pointer relative"
                 style={{
                   backgroundColor: categoryColor.backgroundColor,
                   color: categoryColor.color
