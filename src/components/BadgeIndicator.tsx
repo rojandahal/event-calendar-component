@@ -6,7 +6,7 @@ interface BadgeIndicatorProps {
   id: number;
   category: BadgeCategory;
   count: number;
-  calendarColors: CategoryColor[];
+  calendarColors?: CategoryColor[];
 }
 
 const BadgeIndicator: React.FC<BadgeIndicatorProps> = ({
@@ -20,7 +20,7 @@ const BadgeIndicator: React.FC<BadgeIndicatorProps> = ({
     <div
       key={id}
       className="w-[28px] h-[16px] rounded-[2px] flex items-center justify-center text-xs text-white font-medium"
-      style={{ backgroundColor: categoryColor.color }}
+      style={{ backgroundColor: categoryColor.backgroundColor }}
     >
       {count || 0}
     </div>

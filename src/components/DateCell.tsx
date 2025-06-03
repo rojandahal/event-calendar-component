@@ -19,16 +19,17 @@ import TopBadgeIndicator from "./TopBadgeIndicator";
 
 interface DateCellProps {
   cell: DateCellType;
-  events: Event[];
-  badges: Badge[];
-  topBadges: TopBadge[];
+  events?: Event[];
+  badges?: Badge[];
+  topBadges?: TopBadge[];
   isFirstColumn: boolean;
   isLastColumn: boolean;
   isFirstRow: boolean;
   isLastRow: boolean;
   onEventClick: (event: Event, e: React.MouseEvent) => void;
+  onCellClick: (cell: DateCellType, e: React.MouseEvent) => void;
   multiDayEventGrid: any;
-  calendarColors: CategoryColor[];
+  calendarColors?: CategoryColor[];
 }
 
 const DateCell: React.FC<DateCellProps> = ({
@@ -41,6 +42,7 @@ const DateCell: React.FC<DateCellProps> = ({
   isFirstRow,
   isLastRow,
   onEventClick,
+  onCellClick,
   multiDayEventGrid,
   calendarColors
 }) => {
@@ -51,31 +53,39 @@ const DateCell: React.FC<DateCellProps> = ({
   } | null>(null);
 
   // Filter events for this date
-  const cellEvents = events.filter((event) => {
-    const eventStartDate = new Date(event.startDate);
-    const eventEndDate = new Date(event.endDate);
+  const cellEvents =
+    events &&
+    events.filter((event) => {
+      const eventStartDate = new Date(event.startDate);
+      const eventEndDate = new Date(event.endDate);
 
-    return (
-      (eventStartDate <= cell.date && eventEndDate >= cell.date) ||
-      eventStartDate.toDateString() === cell.date.toDateString() ||
-      eventEndDate.toDateString() === cell.date.toDateString()
-    );
-  });
+      return (
+        (eventStartDate <= cell.date && eventEndDate >= cell.date) ||
+        eventStartDate.toDateString() === cell.date.toDateString() ||
+        eventEndDate.toDateString() === cell.date.toDateString()
+      );
+    });
 
-  const cellBadge = badges.filter((badge) => {
-    return badge.date.toDateString() === cell.date.toDateString();
-  });
+  const cellBadge =
+    badges &&
+    badges.filter((badge) => {
+      return badge.date.toDateString() === cell.date.toDateString();
+    });
 
-  const cellTopBadge = topBadges.filter((badge) => {
-    return badge.date.toDateString() === cell.date.toDateString();
-  });
+  const cellTopBadge =
+    topBadges &&
+    topBadges.filter((badge) => {
+      return badge.date.toDateString() === cell.date.toDateString();
+    });
 
   // Get the event rows for this date from the grid
   const eventRows = multiDayEventGrid[cell.date.toDateString()] || [];
 
-  const singleDayEvents = cellEvents.filter(
-    (event) => event.startDate.toDateString() === event.endDate.toDateString()
-  );
+  const singleDayEvents =
+    cellEvents &&
+    cellEvents.filter(
+      (event) => event.startDate.toDateString() === event.endDate.toDateString()
+    );
 
   // Handle event click
   const handleEventClick = (event: Event, e: React.MouseEvent) => {
@@ -98,8 +108,8 @@ const DateCell: React.FC<DateCellProps> = ({
       className={`
       h-[140px] border border-gray-200 relative cursor-pointer
       ${cell.isCurrentMonth ? "bg-white" : "bg-gray-50 text-gray-400"}
-      ${cell.isToday ? "bg-[#FFDEB0]" : ""}
-      ${cell.isHoliday ? "bg-green-50" : ""}
+      ${cell.isToday ? "bg-today" : ""}
+      ${cell.isHoliday ? "bg-holidays" : ""}
       `}
       style={{
         minHeight: "100px",
@@ -109,6 +119,7 @@ const DateCell: React.FC<DateCellProps> = ({
           ? "#E6F6EF"
           : ""
       }}
+      onClick={(e) => onCellClick(cell, e)}
     >
       <div className="flex p-1 justify-between">
         {/* Today's date to be circled */}
@@ -122,7 +133,7 @@ const DateCell: React.FC<DateCellProps> = ({
         </div>
 
         {/* Event count indicator for small screens */}
-        {cellEvents.length > 0 && (
+        {cellEvents && cellEvents.length > 0 && (
           <div className="md:hidden bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">
             {cellEvents.length}
           </div>
@@ -131,8 +142,10 @@ const DateCell: React.FC<DateCellProps> = ({
 
       {/* Holiday name */}
       {cell.isHoliday && cell.holidayName && (
-        <div className="text-xs text-center text-green-600 font-medium mt-1">
-          {cell.holidayName}
+        <div className="mt-1 mb-10 space-y-1 hidden md:block">
+          <div className="text-[10px] text-center bg-holidaybar text-black mt-1 py-1 px-2 truncate cursor-pointer relative">
+            {cell.holidayName}
+          </div>
         </div>
       )}
 
@@ -222,26 +235,27 @@ const DateCell: React.FC<DateCellProps> = ({
 
       {/* Single-day events */}
       <div className="mt-1 mb-10 space-y-1 hidden md:block">
-        {singleDayEvents.map((event) => {
-          const categoryColor = getCategoryColor(
-            event.category,
-            calendarColors
-          );
+        {singleDayEvents &&
+          singleDayEvents.map((event) => {
+            const categoryColor = getCategoryColor(
+              event.category,
+              calendarColors
+            );
 
-          return (
-            <div
-              key={`${event.id}-${formatDateKey(cell.date)}`}
-              className="py-1 px-2 text-[10px] font-medium truncate cursor-pointer relative"
-              style={{
-                backgroundColor: categoryColor.backgroundColor,
-                color: categoryColor.color
-              }}
-              onClick={(e) => handleEventClick(event, e)}
-            >
-              {event.title}
-            </div>
-          );
-        })}
+            return (
+              <div
+                key={`${event.id}-${formatDateKey(cell.date)}`}
+                className="py-1 px-2 text-[10px] font-medium truncate cursor-pointer relative"
+                style={{
+                  backgroundColor: categoryColor.backgroundColor,
+                  color: categoryColor.color
+                }}
+                onClick={(e) => handleEventClick(event, e)}
+              >
+                {event.title}
+              </div>
+            );
+          })}
       </div>
 
       {/* DISABLED FOR NOW */}
@@ -261,7 +275,7 @@ const DateCell: React.FC<DateCellProps> = ({
       )} */}
 
       {/* Event indicators */}
-      {cellBadge.length > 0 && (
+      {cellBadge && cellBadge.length > 0 && (
         <div className="absolute bottom-1 left-1 right-1 flex justify-center space-x-1">
           {Array.from(
             cellBadge
@@ -287,7 +301,7 @@ const DateCell: React.FC<DateCellProps> = ({
       )}
 
       {/*  Top Badge Indicator */}
-      {cellTopBadge.length > 0 && (
+      {cellTopBadge && cellTopBadge.length > 0 && (
         <div className="absolute top-1 right-1 flex space-x-1">
           {Array.from(
             cellTopBadge

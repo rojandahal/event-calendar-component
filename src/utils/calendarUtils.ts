@@ -73,8 +73,8 @@ export const isHoliday = (
 export const generateCalendarDays = (
   year: number,
   month: number,
-  holidays: Holiday[],
-  weekendDays: number[]
+  holidays?: Holiday[],
+  weekendDays?: number[]
 ): DateCell[] => {
   const daysInMonth = getDaysInMonth(year, month);
   const firstDayOfMonth = new Date(year, month, 1);
@@ -99,7 +99,7 @@ export const generateCalendarDays = (
       previousMonth,
       daysInPreviousMonth - firstDayOfWeek + i + 1
     );
-    const holiday = isHoliday(date, holidays);
+    const holiday = isHoliday(date, holidays ?? []);
 
     cells.push({
       date,
@@ -107,14 +107,14 @@ export const generateCalendarDays = (
       isToday: isSameDay(date, today),
       isHoliday: !!holiday,
       holidayName: holiday?.name,
-      isWeekend: weekendDays.includes(date.getDay())
+      isWeekend: (weekendDays ?? []).includes(date.getDay())
     });
   }
 
   // Add days from current month
   for (let i = 1; i <= daysInMonth; i++) {
     const date = new Date(year, month, i);
-    const holiday = isHoliday(date, holidays);
+    const holiday = isHoliday(date, holidays ?? []);
 
     cells.push({
       date,
@@ -122,7 +122,7 @@ export const generateCalendarDays = (
       isToday: isSameDay(date, today),
       isHoliday: !!holiday,
       holidayName: holiday?.name,
-      isWeekend: weekendDays.includes(date.getDay())
+      isWeekend: (weekendDays ?? []).includes(date.getDay())
     });
   }
 
@@ -130,7 +130,7 @@ export const generateCalendarDays = (
   const remainingCells = 42 - cells.length; // 6 rows × 7 columns = 42 cells
   for (let i = 1; i <= remainingCells; i++) {
     const date = new Date(nextMonthYear, nextMonth, i);
-    const holiday = isHoliday(date, holidays);
+    const holiday = isHoliday(date, holidays ?? []);
 
     cells.push({
       date,
@@ -138,7 +138,7 @@ export const generateCalendarDays = (
       isToday: isSameDay(date, today),
       isHoliday: !!holiday,
       holidayName: holiday?.name,
-      isWeekend: weekendDays.includes(date.getDay())
+      isWeekend: (weekendDays ?? []).includes(date.getDay())
     });
   }
 
@@ -239,11 +239,11 @@ export const getCategoryColors = (): CategoryColor[] => {
 // Get the color for a category
 export const getCategoryColor = (
   category: EventCategory | BadgeCategory | TopBadgeCategory,
-  calendarColors: CategoryColor[]
+  calendarColors?: CategoryColor[]
 ): CategoryColor => {
   const colors = getCategoryColors();
   return (
-    calendarColors.find((c) => c.category === category) ||
+    (calendarColors && calendarColors.find((c) => c.category === category)) ||
     colors.find((c) => c.category === category) || {
       category: "event",
       color: "#000000",

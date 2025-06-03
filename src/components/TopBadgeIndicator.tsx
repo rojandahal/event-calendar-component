@@ -8,7 +8,7 @@ interface TopBadgeIndicator {
   id: number;
   category: TopBadgeCategory;
   count: number;
-  calendarColors: CategoryColor[];
+  calendarColors?: CategoryColor[];
 }
 
 const TopBadgeIndicator: React.FC<TopBadgeIndicator> = ({

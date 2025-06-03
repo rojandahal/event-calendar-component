@@ -2,17 +2,24 @@ import React, { useState } from "react";
 import CalendarHeader from "./CalendarHeader";
 import WeekdayHeader from "./WeekdayHeader";
 import DateCell from "./DateCell";
-import { Badge, CategoryColor, Event, Holiday, TopBadge } from "../types";
+import {
+  Badge,
+  CategoryColor,
+  DateCell as DateCellType,
+  Event,
+  Holiday,
+  TopBadge
+} from "../types";
 import { generateCalendarDays } from "../utils/calendarUtils";
 import { getMultiDayEventGrid } from "../utils/eventUtils";
 
 interface CalendarProps {
-  events: Event[];
-  badges: Badge[];
-  topBadges: TopBadge[];
-  holidays: Holiday[];
-  weekendDays: number[];
-  calendarColors: CategoryColor[];
+  events?: Event[];
+  badges?: Badge[];
+  topBadges?: TopBadge[];
+  holidays?: Holiday[];
+  weekendDays?: number[];
+  calendarColors?: CategoryColor[];
   initialDate?: Date;
 }
 
@@ -56,13 +63,17 @@ const Calendar: React.FC<CalendarProps> = ({
   };
 
   const multiDayEventGrid = getMultiDayEventGrid(
-    events,
-    calendarDays.map((cell) => cell.date)
+    calendarDays.map((cell) => cell.date),
+    events
   );
+
+  function handleCellClick(date: DateCellType, e: React.MouseEvent) {
+    console.error("DATE AND EVENT", date, e);
+  }
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
-      <div className="p-4">
+      <div className="p-0">
         <CalendarHeader
           currentDate={currentDate}
           onPreviousMonth={handlePreviousMonth}
@@ -88,6 +99,7 @@ const Calendar: React.FC<CalendarProps> = ({
                   isFirstRow={rowIndex === 0}
                   isLastRow={rowIndex === 5}
                   onEventClick={handleEventClick}
+                  onCellClick={handleCellClick}
                   multiDayEventGrid={multiDayEventGrid}
                   topBadges={topBadges}
                   calendarColors={calendarColors}
@@ -98,46 +110,39 @@ const Calendar: React.FC<CalendarProps> = ({
         </div>
 
         {/* Legend */}
-        <div className="mt-4 flex flex-wrap items-center gap-4 text-sm">
+        <div className="mt-4 flex justify-center flex-wrap items-center gap-4 text-sm">
+          <span>Indicators:</span>
           <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 rounded-full bg-blue-500"></div>
             <span>Today</span>
+            <div className="w-4 h-4 rounded-full bg-today"></div>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 rounded bg-green-50"></div>
+            <span>Leaves</span>
+            <div className="w-4 h-4 rounded-full bg-leave"></div>
+          </div>
+          <div className="flex items-center space-x-2">
             <span>Holidays</span>
+            <div className="w-4 h-4 rounded-full bg-holidays"></div>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="w-4 h-4 rounded bg-gray-50"></div>
-            <span>Outside Current Month</span>
+            <span>WFH</span>
+            <div className="w-4 h-4 rounded-full bg-wfh"></div>
           </div>
           <div className="flex items-center space-x-2">
-            <div
-              className="w-4 h-4 rounded"
-              style={{ backgroundColor: "#10B981" }}
-            ></div>
-            <span>Work</span>
+            <span>Late</span>
+            <div className="w-4 h-4 rounded-full bg-late"></div>
           </div>
           <div className="flex items-center space-x-2">
-            <div
-              className="w-4 h-4 rounded"
-              style={{ backgroundColor: "#3B82F6" }}
-            ></div>
-            <span>Personal</span>
+            <span>Appointments</span>
+            <div className="w-4 h-4 rounded-full bg-appointments"></div>
           </div>
           <div className="flex items-center space-x-2">
-            <div
-              className="w-4 h-4 rounded"
-              style={{ backgroundColor: "#8B5CF6" }}
-            ></div>
-            <span>Appointment</span>
+            <span>Projects</span>
+            <div className="w-4 h-4 rounded-full bg-projects"></div>
           </div>
           <div className="flex items-center space-x-2">
-            <div
-              className="w-4 h-4 rounded"
-              style={{ backgroundColor: "#F59E0B" }}
-            ></div>
-            <span>Project</span>
+            <span>Notes</span>
+            <div className="w-4 h-4 rounded-full bg-notes"></div>
           </div>
         </div>
       </div>
