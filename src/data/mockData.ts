@@ -11,15 +11,15 @@ export const events: Event[] = [
     location: "Conference Room A",
     description: "This is a multi-day event spanning across dates."
   },
-  // {
-  //   id: "2",
-  //   title: "Event Two",
-  //   startDate: new Date(2025, 5, 2),
-  //   endDate: new Date(2025, 5, 5),
-  //   category: "project",
-  //   location: "Virtual Meeting",
-  //   description: "Project planning session with team members."
-  // },
+  {
+    id: "2",
+    title: "Event Two",
+    startDate: new Date(2025, 5, 2),
+    endDate: new Date(2025, 5, 2),
+    category: "project",
+    location: "Virtual Meeting",
+    description: "Project planning session with team members."
+  }
   // {
   //   id: "3",
   //   title: "Leave",

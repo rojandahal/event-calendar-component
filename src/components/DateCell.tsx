@@ -85,7 +85,7 @@ const DateCell: React.FC<DateCellProps> = ({
   return (
     <div
       className={`
-      min-h-[100px] border border-gray-200 p-1 relative
+      h-[140px] border border-gray-200 relative
       ${cell.isCurrentMonth ? "bg-white" : "bg-gray-50 text-gray-400"}
       ${cell.isToday ? "bg-[#FFDEB0]" : ""}
       ${cell.isHoliday ? "bg-green-50" : ""}
@@ -99,7 +99,8 @@ const DateCell: React.FC<DateCellProps> = ({
           : ""
       }}
     >
-      <div className="flex justify-between">
+      <div className="flex p-1 justify-between">
+        {/* Today's date to be circled */}
         <div
           className={`
         text-sm font-medium p-1 rounded-full w-7 h-7 flex items-center justify-center
@@ -119,7 +120,7 @@ const DateCell: React.FC<DateCellProps> = ({
 
       {/* Holiday name */}
       {cell.isHoliday && cell.holidayName && (
-        <div className="text-xs text-green-600 font-medium mt-1">
+        <div className="text-xs text-center text-green-600 font-medium mt-1">
           {cell.holidayName}
         </div>
       )}
@@ -127,7 +128,7 @@ const DateCell: React.FC<DateCellProps> = ({
       {/* Multi-day events */}
       <div
         className="mt-1 relative hidden md:block"
-        style={{ minHeight: `${eventRows.length * 24}px` }}
+        style={{ minHeight: `${eventRows.length * 20}px` }}
       >
         {eventRows.map((event: Event, rowIndex: number) => {
           if (!event) {
@@ -136,7 +137,7 @@ const DateCell: React.FC<DateCellProps> = ({
                 key={`empty-${rowIndex}`}
                 style={{
                   height: "20px",
-                  top: `${rowIndex * 24}px`,
+                  top: `${rowIndex * 20}px`,
                   position: "absolute",
                   left: 0,
                   right: 0
@@ -169,14 +170,14 @@ const DateCell: React.FC<DateCellProps> = ({
                   (1000 * 60 * 60 * 24)
               ) + 1;
 
-            const segmentWidth = `${segmentDays * 100}%`;
+            const segmentWidth = `${segmentDays * 101.1}%`;
 
             if (isStart) {
               return (
                 <div
                   key={`${event.id}-${formatDateKey(segment.start)}-${index}`}
                   className={`
-            py-1 px-2 text-xs font-medium truncate cursor-pointer absolute
+            py-1 text-xs font-medium truncate cursor-pointer absolute
             backdrop-blur-sm bg-white/40 border border-white/30 shadow
             flex items-center justify-center
           `}
@@ -197,7 +198,7 @@ const DateCell: React.FC<DateCellProps> = ({
                     {event.title}
                   </span>
 
-                  {activeEvent && activeEvent.id === event.id && (
+                  {activeEvent && activeEvent.id == event.id && (
                     <EventTooltip event={event} onClose={closeTooltip} />
                   )}
                 </div>
@@ -217,7 +218,7 @@ const DateCell: React.FC<DateCellProps> = ({
           return (
             <div
               key={`${event.id}-${formatDateKey(cell.date)}`}
-              className="rounded-md py-1 px-2 text-xs font-medium truncate cursor-pointer relative"
+              className="py-1 px-2 text-[10px] font-medium truncate cursor-pointer relative"
               style={{
                 backgroundColor: categoryColor.backgroundColor,
                 color: categoryColor.color
@@ -226,9 +227,9 @@ const DateCell: React.FC<DateCellProps> = ({
             >
               {event.title}
 
-              {activeEvent && activeEvent.id === event.id && (
-                <EventTooltip event={event} onClose={closeTooltip} />
-              )}
+              <EventTooltip event={event} onClose={closeTooltip} />
+              {/* {activeEvent && activeEvent.id == event.id && (
+                )} */}
             </div>
           );
         })}

@@ -14,7 +14,6 @@ const BadgeIndicator: React.FC<BadgeIndicatorProps> = ({
   count
 }) => {
   const categoryColor = getCategoryColor(category);
-  console.log("category", category);
   return (
     <div
       key={id}

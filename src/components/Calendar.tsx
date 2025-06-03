@@ -11,6 +11,8 @@ interface CalendarProps {
   badges: Badge[];
   topBadges: TopBadge[];
   holidays: Holiday[];
+  isWeekend: boolean;
+  weekendDays: number[];
   initialDate?: Date;
 }
 
@@ -19,6 +21,8 @@ const Calendar: React.FC<CalendarProps> = ({
   badges,
   topBadges,
   holidays,
+  isWeekend,
+  weekendDays,
   initialDate = new Date()
 }) => {
   const [currentDate, setCurrentDate] = useState<Date>(initialDate);
@@ -32,7 +36,9 @@ const Calendar: React.FC<CalendarProps> = ({
   const calendarDays = generateCalendarDays(
     currentYear,
     currentMonth,
-    holidays
+    holidays,
+    isWeekend,
+    weekendDays
   );
 
   // Handle month navigation
@@ -46,6 +52,7 @@ const Calendar: React.FC<CalendarProps> = ({
 
   // Handle event click
   const handleEventClick = (event: Event) => {
+    console.log("ON EVENT CLICK", event);
     setSelectedEvent(event);
   };
 
@@ -64,7 +71,7 @@ const Calendar: React.FC<CalendarProps> = ({
         />
 
         <div className="border border-gray-200 rounded-lg overflow-hidden">
-          <WeekdayHeader />
+          <WeekdayHeader weekendDays={weekendDays} />
 
           <div className="grid grid-cols-7">
             {calendarDays.map((cell, index) => {
