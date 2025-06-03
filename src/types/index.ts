@@ -19,6 +19,7 @@ export interface Event {
   location?: string;
   description?: string;
   color?: string;
+  isHoliday: boolean | null;
 }
 
 export interface Holiday {

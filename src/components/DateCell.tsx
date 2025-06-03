@@ -16,6 +16,7 @@ import {
 } from "../utils/calendarUtils";
 import BadgeIndicator from "./BadgeIndicator";
 import TopBadgeIndicator from "./TopBadgeIndicator";
+import { getBackgroundForColor, getContrastYIQ } from "../utils/eventUtils";
 
 interface DateCellProps {
   cell: DateCellType;
@@ -113,11 +114,19 @@ const DateCell: React.FC<DateCellProps> = ({
       `}
       style={{
         minHeight: "100px",
-        backgroundColor: cell.isToday
-          ? "#FFDEB0"
-          : cell.isWeekend
-          ? "#E6F6EF"
-          : ""
+        backgroundColor: (() => {
+          // Default logic
+          if (cell.isToday) return "#FFDEB0";
+          if (cell.isWeekend) return "#E6F6EF";
+          const holidayEvent = cellEvents?.find((e) => e.isHoliday === true);
+          if (holidayEvent) {
+            if (holidayEvent.color) {
+              return getBackgroundForColor(holidayEvent.color);
+            }
+            return "#E6F6EF";
+          }
+          return "";
+        })()
       }}
       onClick={(e) => onCellClick(cell, e)}
     >
@@ -248,8 +257,12 @@ const DateCell: React.FC<DateCellProps> = ({
                 key={`${event.id}-${formatDateKey(cell.date)}`}
                 className="py-1 px-2 text-[11px] font-medium truncate cursor-pointer relative"
                 style={{
-                  backgroundColor: categoryColor.backgroundColor,
-                  color: categoryColor.color
+                  backgroundColor: event.color
+                    ? event.color
+                    : categoryColor.backgroundColor,
+                  color: event.color
+                    ? getContrastYIQ(event.color)
+                    : categoryColor.color
                 }}
                 onClick={(e) => handleEventClick(event, e)}
               >

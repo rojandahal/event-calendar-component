@@ -8,17 +8,18 @@ export const mockEvents: Event[] = [
     startDate: new Date(2025, 5, 2),
     endDate: new Date(2025, 5, 13),
     category: "event",
-    location: "Conference Room A",
-    description: "This is a multi-day event spanning across dates."
+    description: "This is a multi-day event spanning across dates.",
+    isHoliday: null
   },
   {
     id: "2",
     title: "Event Two",
-    startDate: new Date(2025, 5, 2),
-    endDate: new Date(2025, 5, 2),
+    startDate: new Date(2025, 5, 3),
+    endDate: new Date(2025, 5, 3),
     category: "project",
-    location: "Virtual Meeting",
-    description: "Project planning session with team members."
+    description: "Project planning session with team members.",
+    isHoliday: true,
+    color: "#f70fd2"
   }
 ];
 
@@ -55,23 +56,17 @@ export const mockBadges: Badge[] = [
     count: 8
   },
   {
-    id: 1,
+    id: 3,
     category: "wfh",
     date: new Date(2025, 5, 2),
     count: 6
   },
   {
-    id: 1,
+    id: 4,
     category: "late",
     date: new Date(2025, 5, 2),
     count: 2
   },
-  {
-    id: 1,
-    category: "leave",
-    date: new Date(2025, 5, 13),
-    count: 2
-  }
 ];
 
 export const mockTopBadge: TopBadge[] = [

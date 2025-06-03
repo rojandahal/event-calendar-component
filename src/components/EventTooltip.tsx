@@ -74,15 +74,6 @@ const EventTooltip: React.FC<EventTooltipProps> = ({ event, onClose }) => {
           </div>
         </div>
 
-        {event.location && (
-          <div className="flex items-start">
-            <span className="material-icons text-gray-500 mr-2 text-lg">
-              📍
-            </span>
-            <p>{event.location}</p>
-          </div>
-        )}
-
         {event.description && (
           <div className="flex items-start">
             <span className="material-icons text-gray-500 mr-2 text-lg">
