@@ -178,7 +178,7 @@ const DateCell: React.FC<DateCellProps> = ({
                   key={`${event.id}-${formatDateKey(segment.start)}-${index}`}
                   className={`
             py-1 text-xs font-medium truncate cursor-pointer absolute
-            backdrop-blur-sm bg-white/40 border border-white/30 shadow
+            backdrop-blur-sm bg-white/40 border border-white/30
             flex items-center justify-center
           `}
                   style={{
