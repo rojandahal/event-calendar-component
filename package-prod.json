@@ -1,0 +1,33 @@
+{
+  "name": "custom-event-calendar",
+  "version": "1.0.0",
+  "description": "A customizable event calendar component for React.",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/rojandahal1/event-calendar.git"
+  },
+  "homepage": "https://gitlab.com/rojandahal1/event-calendar#readme",
+  "keywords": [
+    "react",
+    "calendar",
+    "event-calendar",
+    "component"
+  ],
+  "author": "Rojan Dahal <mr.dahalrojan@gmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
+}
