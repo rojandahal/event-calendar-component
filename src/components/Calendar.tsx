@@ -73,7 +73,7 @@ const Calendar: React.FC<CalendarProps> = ({
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">
-      <div className="p-0">
+      <div className="p-1">
         <CalendarHeader
           currentDate={currentDate}
           onPreviousMonth={handlePreviousMonth}

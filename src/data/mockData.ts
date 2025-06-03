@@ -1,7 +1,7 @@
 import { Badge, Event, Holiday, TopBadge } from "../types";
 
 // Sample events data
-export const events: Event[] = [
+export const mockEvents: Event[] = [
   {
     id: "1",
     title: "Event One",
@@ -23,7 +23,7 @@ export const events: Event[] = [
 ];
 
 // Sample holidays data
-export const holidays: Holiday[] = [
+export const mockHolidays: Holiday[] = [
   {
     id: "1",
     name: "May Day",
@@ -41,7 +41,7 @@ export const holidays: Holiday[] = [
   }
 ];
 
-export const badges: Badge[] = [
+export const mockBadges: Badge[] = [
   {
     id: 1,
     category: "leave",
@@ -74,7 +74,7 @@ export const badges: Badge[] = [
   }
 ];
 
-export const topBadge: TopBadge[] = [
+export const mockTopBadge: TopBadge[] = [
   {
     id: 1,
     category: "project-count",
