@@ -15,16 +15,14 @@ A customizable and minimal event calendar component for React.
 ## Installation
 
 ```bash
-npm install custom-event-calendar
-# or
-yarn add custom-event-calendar
+npm i @rojandahal/custom-event-calendar
 ```
 
 ## Usage
 
 ```tsx
 import React from "react";
-import { CustomEventCalendar } from "custom-event-calendar";
+import { CustomEventCalendar } from "@rojanadahal/custom-event-calendar";
 
 function App() {
   const events = [
