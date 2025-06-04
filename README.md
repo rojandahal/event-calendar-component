@@ -2,8 +2,8 @@
 
 A customizable and minimal event calendar component for React.
 
-![npm version](https://img.shields.io/npm/v/custom-event-calendar?style=flat-square)
-![license](https://img.shields.io/npm/l/custom-event-calendar?style=flat-square)
+![npm version](https://img.shields.io/npm/v/@rojandahal/custom-event-calendar?style=flat-square)
+![license](https://img.shields.io/npm/l/@rojandahal/custom-event-calendar?style=flat-square)
 
 ## Features
 
